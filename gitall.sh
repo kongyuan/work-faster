@@ -32,7 +32,7 @@ fi
 
 OLDPATH=$(pwd)
 
-for path in `find $HEREPATH -name .git`
+for path in `find $HEREPATH -name .git -follow`
  do
     cd ${path:0:-4}
 
