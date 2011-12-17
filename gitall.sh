@@ -1,7 +1,7 @@
 #!/bin/bash
 #git批量操作,一次性pull或者push一个目录下所有git仓库,目前智能操作master分支
 
-VERSION=0.1
+VERSION=1.0
 
 #帮助处理
 if [ "-h" == "$1" ] || [ "$#" == 0 ]
@@ -12,7 +12,8 @@ echo "usage: gitall [-v] [-help]
 echo "The most commonly used commands are:
         status     check all sub dir status
 	pull       pull all sub dir
-	push       push all sub dir";
+	push       push all sub dir
+        commit     add all and commit all";
 exit 1;
 fi
 #版本处理
