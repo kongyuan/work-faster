@@ -48,7 +48,11 @@ for path in `find $HEREPATH -name .git -follow`
     then
 	echo -e "\033[32;40m >> git status ${path:0:-4}\033[0m"
 	git status
+    elif [ "$1" == "commit" ]
+    then
+	echo -e "\033[32;40m >> git commit -a ${path:0:-4}\033[0m"
+	git commit -a
     fi
-    #echo $OLDPATH
+    
     cd $OLDPATH
 done
