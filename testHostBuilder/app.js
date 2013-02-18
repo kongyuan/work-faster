@@ -84,25 +84,28 @@ function createBaseFiles(){
     spawn("mkdir" , [serverPath + "/css"]);
     spawn("mkdir" , [serverPath + "/js"]);
 
-    wget = spawn("wget" , [
-        '-P'  //where to place
-        , serverPath + "/js/"  //dir to place
-        , "http://code.jquery.com/jquery.js"  // what file
-    ]);
 
-    wget.stdout.on('data', function (data) {
-      console.log('stdout: ' + data);
-    });
+    options = {
+        host: 'code.jquery.com' ,
+        port: 80 ,
+        path: '/jquery.js'
+    };
 
-    wget.stderr.on('data', function (data) {
-      // console.log('stderr: ' + data);
-    });
+    var request = http.get(options, function(res){
+        var imagedata = '';
+        res.setEncoding('binary');
 
-    wget.on('exit', function (code) {
-        if (code === 0)
-            console.log("download jquery last version success.");
+        res.on('data', function(chunk){
+            imagedata += chunk;
+        });
 
-            startServer();
+        res.on('end', function(){
+            fs.writeFile( serverPath + "/js/jquery.js", imagedata, 'binary', function(err){
+                if (err) throw err;
+                console.log("download jquery last version success.");
+                startServer();
+            });
+        });
     });
 
     spawn("touch" , [serverPath + "/css/test.css"]);
